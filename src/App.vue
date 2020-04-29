@@ -14,7 +14,7 @@
         <label> Nome <span class="span-red">{{ erro.nome }}</span></label>
         <input type="text" placeholder="Nome" v-model="tecnico.nome" maxlength="150" >
         <label> CPF <span class="span-red">{{ erro.cpf }}</span></label>
-        <input type="text" placeholder="CPF" v-model="tecnico.cpf" maxlength="20" >
+        <input type="text" placeholder="CPF" v-model="tecnico.cpf" maxlength="14" v-mask="['###.###.###-##']">
         <label> Data de Nascimento <span class="span-red">{{ erro.data_nascimento }}</span></label>
         <input type="date" placeholder="Data de Nascimento" v-model="tecnico.data_nascimento" >
         <label> Gênero <span class="span-red">{{ erro.genero }}</span></label>
@@ -22,7 +22,7 @@
         <label> E-mail <span class="span-red">{{ erro.email }}</span></label>
         <input type="text" placeholder="E-mail" v-model="tecnico.email" maxlength="100" >
         <label> Telefone <span class="span-red">{{ erro.telefone }}</span></label>
-        <input type="text" placeholder="Telefone" v-model="tecnico.telefone" maxlength="20" >
+        <input type="text" placeholder="Telefone" v-model="tecnico.telefone" maxlength="20" v-mask="['(##)#####-####', '(##)####-####']">
         <label> Seu diferencial <span class="span-red">{{ erro.seu_diferencial }}</span></label>
         <input type="text" placeholder="Seu diferencial" v-model="tecnico.seu_diferencial" maxlength="500" >
 
@@ -56,7 +56,7 @@
             <td>{{ tecnico.nome }}</td>
             <td>{{ tecnico.cpf }}</td>
             <td>{{ tecnico.data_nascimento }}</td>
-            <td>{{ tecnico.genero }}</td>
+            <td>{{ tecnico.genero.toUpperCase() }}</td>
             <td>{{ tecnico.email }}</td>
             <td>{{ tecnico.telefone }}</td>
             <td>{{ tecnico.seu_diferencial }}</td>
@@ -79,6 +79,7 @@
 <script>
   
   import Tecnico from './services/tecnicos'
+  import { TheMask } from 'vue-the-mask'
 
   export default {
     
@@ -96,7 +97,7 @@
           telefone : '',
           seu_diferencial : ''
         },
-        // Array de 'Técnicos' para ser utilizado na função 'filtroTecnico()'.
+        // Array de 'Técnicos' para ser utilizado na função 'filtrarTecnico()'.
         tecnicos: [],
         // Declaração de 'v-models' para 'erro'.
         erro: {
