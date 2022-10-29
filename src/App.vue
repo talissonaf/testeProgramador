@@ -94,7 +94,7 @@
 
       <table>
         <thead>
-          <tr align="center">
+          <tr>
             <th>NOME</th>
             <th>CPF</th>
             <th>DATA DE NASCIMENTO</th>
@@ -371,6 +371,12 @@ export default {
 </script>
 
 <style>
+.container {
+  margin-top: 20px;
+}
+th {
+  text-align: center;
+}
 .span-red {
   color: red;
 }
