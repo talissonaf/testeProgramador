@@ -13,16 +13,22 @@
   
         <label> Nome <span class="span-red">{{ erro.nome }}</span></label>
         <input type="text" placeholder="Nome" v-model="tecnico.nome" maxlength="150" >
+
         <label> CPF <span class="span-red">{{ erro.cpf }}</span></label>
         <input type="text" placeholder="CPF" v-model="tecnico.cpf" maxlength="14" v-mask="['###.###.###-##']">
+        
         <label> Data de Nascimento <span class="span-red">{{ erro.data_nascimento }}</span></label>
         <input type="date" placeholder="Data de Nascimento" v-model="tecnico.data_nascimento" >
+        
         <label> Gênero <span class="span-red">{{ erro.genero }}</span></label>
-        <input type="text" placeholder="Gênero: M ou F" v-model="tecnico.genero" maxlength="1" >
+        <input type="text" placeholder="M ou F" v-model="tecnico.genero" maxlength="1" >
+
         <label> E-mail <span class="span-red">{{ erro.email }}</span></label>
         <input type="text" placeholder="E-mail" v-model="tecnico.email" maxlength="100" >
+        
         <label> Telefone <span class="span-red">{{ erro.telefone }}</span></label>
         <input type="text" placeholder="Telefone" v-model="tecnico.telefone" maxlength="20" v-mask="['(##)#####-####', '(##)####-####']">
+        
         <label> Seu diferencial <span class="span-red">{{ erro.seu_diferencial }}</span></label>
         <input type="text" placeholder="Seu diferencial" v-model="tecnico.seu_diferencial" maxlength="500" >
 
@@ -38,7 +44,7 @@
         
         <thead>
 
-          <tr>
+          <tr align="center">
             <th>NOME</th>
             <th>CPF</th>
             <th>DATA DE NASCIMENTO</th>
@@ -52,7 +58,7 @@
 
         <tbody>
 
-          <tr v-for="tecnico of filtrarTecnico">
+          <tr v-for="tecnico of filtrarTecnico" :key="tecnico.id" :id="'tec-'+tecnico.id">
             <td>{{ tecnico.nome }}</td>
             <td>{{ tecnico.cpf }}</td>
             <td>{{ tecnico.data_nascimento }}</td>
@@ -144,7 +150,7 @@
       salvar() {
         // Método que chama a validação dos campos do formulário.
         if(this.validaForm()) {
-          console.log(this.tecnico.nome);
+          // console.log(this.tecnico.nome);
          
           // Se houver 'Técnico' já cadastrado, os dados serão reinseridos 
           // em seus respectivos lugares no formulário e as alterações 
@@ -163,7 +169,7 @@
               this.refresh();
             }).catch(e => {
               // Pega eventuais erros.
-              this.erro = e.response.data.erro;
+              this.erro = e.response.data.erro;C
             })
           } else {
             // Se não houver 'Técnico' cadastrado, os dados serão salvos e incluídos na tabela.
@@ -217,6 +223,7 @@
 
       // Método responsável por validar os campos.
       validaForm() {
+        // console.log("TECNICO:",this.tecnico);
         
         // Declara a variável 'erros' e a inicia com '0'.
         var erros = 0;
@@ -242,6 +249,22 @@
         if (this.tecnico.cpf.length < 11) {
           // Exibe uma mensagem de erro ao lado da 'label' de 'CPF'.
           this.erro.cpf = 'Por favor, digite um CPF válido (11 dígitos)!';
+          // Acrescenta 1 ao conteúdo da variável 'erros'.
+          erros++;
+        }
+
+        // Testa se há 'Data de Nascimento' preenchida.
+        if (this.tecnico.data_nascimento == "") {
+          // Exibe uma mensagem de erro ao lado da 'label' de 'Data de Nascimento'.
+          this.erro.data_nascimento = 'Por favor, digite uma "Data de Nascimento"!';
+          // Acrescenta 1 ao conteúdo da variável 'erros'.
+          erros++;
+        }
+
+        // Testa se o campo 'Gênero' foi preenchido corretamente ('M' ou 'F').
+        if (this.tecnico.genero != "M" && this.tecnico.genero != "F") {
+          // Exibe uma mensagem de erro ao lado da 'label' de 'Gênero'.
+          this.erro.genero = 'Por favor, digite M (masculino) ou F (feminino)!';
           // Acrescenta 1 ao conteúdo da variável 'erros'.
           erros++;
         }
